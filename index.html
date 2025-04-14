@@ -22,7 +22,6 @@
             );
             background-size: 400%;
             animation: colorShift 10s ease infinite;
-            position: relative;
         }
 
         @keyframes colorShift {
@@ -37,9 +36,31 @@
             }
         }
 
+        .container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .ip-background {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.2); /* Color del texto semi-transparente */
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            white-space: pre-wrap;
+            text-align: center;
+            width: 300px; /* Ajusta según el tamaño deseado */
+            height: 300px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
         img {
-            width: 200px;
+            width: 200px; /* Ajusta el tamaño según necesites */
             animation: spin 4s linear infinite;
+            position: relative;
+            z-index: 2; /* La imagen está encima del texto */
         }
 
         @keyframes spin {
@@ -50,31 +71,32 @@
                 transform: rotate(360deg);
             }
         }
-
-        #ip-address {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            font-size: 24px;
-            font-family: Arial, sans-serif;
-            opacity: 0.8;
-        }
     </style>
 </head>
 <body>
-    <div id="ip-address">Cargando IP...</div>
-    <img src="me.png" alt="Imagen giratoria">
+    <div class="container">
+        <div class="ip-background" id="ip-text"></div>
+        <img src="me.png" alt="Imagen giratoria">
+    </div>
+
     <script>
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('ip-address').textContent = `Tu IP: ${data.ip}`;
-            })
-            .catch(error => {
-                document.getElementById('ip-address').textContent = 'No se pudo obtener la IP';
-                console.error('Error:', error);
-            });
+        // Función para obtener la IP del usuario
+        async function getUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                const ip = data.ip;
+                // Repetir la IP varias veces para llenar el fondo
+                const repeatedIP = (ip + ' ').repeat(50); // Ajusta el número según necesidad
+                document.getElementById('ip-text').textContent = repeatedIP;
+            } catch (error) {
+                console.error('Error al obtener la IP:', error);
+                document.getElementById('ip-text').textContent = 'No se pudo obtener la IP';
+            }
+        }
+
+        // Llamar a la función al cargar la página
+        getUserIP();
     </script>
 </body>
 </html>
