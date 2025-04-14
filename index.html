@@ -1,9 +1,57 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Fondo Arcoíris con Imagen Giratoria</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(
+                45deg,
+                red,
+                orange,
+                yellow,
+                green,
+                blue,
+                indigo,
+                violet,
+                red
+            );
+            background-size: 400%;
+            animation: colorShift 10s ease infinite;
+        }
+
+        @keyframes colorShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 400% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        img {
+            width: 200px; /* Ajusta el tamaño según necesites */
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
 <body>
-
-<h1>tetera</h1>
-<p>compartan colores.</p>
-
+    <img src="me.png" alt="Imagen giratoria">
 </body>
 </html>
